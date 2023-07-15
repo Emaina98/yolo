@@ -5,6 +5,10 @@ services:
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - ~/app/mongo:/data/db 
+    networks:
+      - yolo1
 
   client: 
     build: 
@@ -13,7 +17,10 @@ services:
     container_name: client
     restart: always
     ports:
-      - 3001:80
+      - 3000:80
+    networks:
+      - frontend
+    
 
   backend:
     build:
@@ -25,3 +32,12 @@ services:
       - mongo
     ports:
       - 5000:5000
+    networks:
+      - yolo1
+      - frontend
+
+networks:
+  yolo1:
+     driver: bridge
+  frontend:
+     driver: bridge
