@@ -1,0 +1,18 @@
+[Unit]
+Description=MongoDB Database Server
+Documentation=https://docs.mongodb.org/manual
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/mongod --config /etc/mongodb.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/usr/bin/mongod --shutdown --config /etc/mongodb.conf
+User=mongodb
+Group=mongodb
+StandardOutput=syslog
+SyslogIdentifier=mongodb
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

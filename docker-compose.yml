@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+  client:
+    # image: emaina98/yolo
+    build: 
+      dockerfile: Dockerfile
+      context: ./client
+    container_name: client
+    restart: always
+    ports:
+      - 3000:80
+  backend:
+    build:
+     dockerfile: Dockerfile
+     context: ./backend
+    container_name: backend
+    restart: always
+    ports:
+      - 5000:5000
