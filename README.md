@@ -16,7 +16,8 @@ Create a file named 'Dockerfile' in the client directory. The Dockerfile defines
 
 ## Frontend Dockerfile 
 
-`FROM node:16-alpine
+`# stage 1
+FROM node:16-alpine as builder
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
@@ -25,11 +26,12 @@ RUN npm install
 CMD [ "npm","build" ]
 RUN npm run build
 
-#stage 2
+# stage 2
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/build .`
-
+COPY --from=builder /app/build .
+`
+``
 ## Build the Container Image
 `docker build -t emaina98/clientyolo:v1 .`
 ## Run the Container
