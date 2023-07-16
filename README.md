@@ -60,7 +60,7 @@ Access the website by opening a web browser and navigating to http://localhost:5
 
 ## Create docker compose YAML file to manage the microservices
 `version: '3'
-services:
+`services:
     mongo:
         image: mongo
         restart: always
