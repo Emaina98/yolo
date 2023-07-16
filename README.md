@@ -60,19 +60,19 @@ Access the website by opening a web browser and navigating to http://localhost:5
 
 ## Create docker compose YAML file to manage the microservices
 `version: '3'
-`services:
-    `mongo:
-        `image: mongo
-        `restart: always`
-        `ports:`
-            `- 27017:27017`
-        `volumes:`
-             `- ~/app/mongo:/data/db `
-        `networks:`
-            `- yolo1`
+ services:
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+             - ~/app/mongo:/data/db 
+        networks:
+            - yolo1
 
     client:
-            build:
+        build:
             dockerfile: Dockerfile
             context: ./client
         container_name: client
@@ -82,22 +82,22 @@ Access the website by opening a web browser and navigating to http://localhost:5
         networks:
             - frontend
 
-    `backend:`  
-        `build:`  
-            `dockerfile: Dockerfile`
-            `context: ./backend`
-        `container_name: backend`
-        `restart: always`
-        `depends_on:`
-            `- mongo`
-        `ports:`
-            `- 5000:5000`
-        `networks:`
-            `- yolo1`
-            `- frontend`
+    backend:  
+        build:
+            dockerfile: Dockerfile
+            context: ./backend
+        container_name: backend
+        restart: always
+        depends_on:
+            - mongo
+        ports:
+            - 5000:5000
+        networks:
+            - yolo1
+            - frontend
 
-`networks:`
-    `yolo1:`
-        `driver: bridge`
-    `frontend:`
-        `driver: bridge`
+networks:
+    yolo1:
+        driver: bridge
+    frontend:
+        driver: bridge`
