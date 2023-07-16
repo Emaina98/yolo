@@ -97,7 +97,7 @@ Access the website by opening a web browser and navigating to http://localhost:5
             - frontend
 
     networks:
-    yolo1:
-        driver: bridge
-    frontend:
-        driver: bridge`
+        yolo1:
+            driver: bridge
+         frontend:
+            driver: bridge`
