@@ -72,15 +72,15 @@ Access the website by opening a web browser and navigating to http://localhost:5
             `- yolo1`
 
     client:
-            `build:`
-            `dockerfile: Dockerfile`
-            `context: ./client`
-        `container_name: client`
-        `restart: always`
-        `ports:`
-            `- 3000:80`
-        `networks:`
-            `- frontend`
+            build:
+            dockerfile: Dockerfile
+            context: ./client
+        container_name: client
+        restart: always
+        ports:
+            - 3000:80
+        networks:
+            - frontend
 
     `backend:`  
         `build:`  
