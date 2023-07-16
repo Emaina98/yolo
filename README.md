@@ -60,7 +60,7 @@ Access the website by opening a web browser and navigating to http://localhost:5
 
 ## Create docker compose YAML file to manage the microservices
 `version: '3'
- services:
+    services:
     mongo:
         image: mongo
         restart: always
@@ -94,9 +94,9 @@ Access the website by opening a web browser and navigating to http://localhost:5
             - 5000:5000
         networks:
             - yolo1
-            - frontend``
+            - frontend
 
- networks:
+    networks:
     yolo1:
         driver: bridge
     frontend:
