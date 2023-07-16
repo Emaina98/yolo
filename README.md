@@ -16,13 +16,13 @@ Create a file named 'Dockerfile' in the client directory. The Dockerfile defines
 
 ## client Dockerfile-syntax
 `FROM node:16-alpine as builder
-WORKDIR /app
-COPY package.json .
-COPY package-lock.json .
-COPY . .
-RUN npm install
-CMD [ "npm","build" ]
-RUN npm run build`
+ WORKDIR /app
+ COPY package.json .
+ COPY package-lock.json .
+ COPY . .
+ RUN npm install
+ CMD [ "npm","build" ]
+ RUN npm run build`
 
 `#stage 2
 FROM nginx:alpine
@@ -60,7 +60,7 @@ Access the website by opening a web browser and navigating to http://localhost:5
 
 ## Create docker compose YAML file to manage the microservices
 `version: '3'
-    services:
+  services:
     mongo:
         image: mongo
         restart: always
