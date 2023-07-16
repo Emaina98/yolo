@@ -69,9 +69,9 @@ services:
         volumes:
              - ~/app/mongo:/data/db 
         networks:
-            - yolo1
+            - yolo1`
 
-    client:
+    `client:
         build:
             dockerfile: Dockerfile
             context: ./client
@@ -94,9 +94,9 @@ services:
             - 5000:5000
         networks:
             - yolo1
-            - frontend
+            - frontend``
 
-networks:
+`networks:
     yolo1:
         driver: bridge
     frontend:
