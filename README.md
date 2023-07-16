@@ -71,8 +71,8 @@ Access the website by opening a web browser and navigating to http://localhost:5
         `networks:`
             `- yolo1`
 
-    `client:`
-        `build:`
+    client:
+            `build:`
             `dockerfile: Dockerfile`
             `context: ./client`
         `container_name: client`
