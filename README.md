@@ -107,7 +107,7 @@ networks:
 
 
         `version: '3'
- services:
+services:
     mongo:
         image: mongo
         restart: always
@@ -147,4 +147,4 @@ networks:
     yolo1:
         driver: bridge
     frontend:
-        driver: bridge``
+        driver: bridge`
