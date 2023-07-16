@@ -1,6 +1,6 @@
 
 
-# README.md
+
 
 ## Yolo Containerization README
 This file contains the steps followed in the containerization of Yolo e-commerce website.
@@ -12,9 +12,11 @@ Docker is a containerization platform that enables you to build, distribute, and
 ## Navigate to the Client Folder 
 `cd client`
 ## Create Client Dockerfile
-Create a file named **Dockerfile **in the client directory. The Dockerfile defines the instructions to build the container image. 
-``# stage 1
-FROM node:16-alpine as builder
+Create a file named 'Dockerfile' in the client directory. The Dockerfile defines the instructions to build the container image. 
+
+## Frontend Dockerfile 
+
+`FROM node:16-alpine
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
@@ -23,11 +25,11 @@ RUN npm install
 CMD [ "npm","build" ]
 RUN npm run build
 
-stage 2 
+#stage 2
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/build .
-``
+COPY --from=builder /app/build .`
+
 ## Build the Container Image
 `docker build -t emaina98/clientyolo:v1 .`
 ## Run the Container
@@ -35,13 +37,13 @@ COPY --from=builder /app/build .
 
 Access the website by opening a web browser and navigating to http://localhost:3000
 
-##Best Practices
+## Best Practices
 Minimal base image used to reduce the container's size.
 ## Open a new terminal and repeat the same steps in the backend folder
  `cd backend`
 ## Create backend Dockerfile
-Create a file named **Dockerfile **in the client directory. The Dockerfile defines the instructions to build the container image. 
-# stage 1 dockerfile-syntax
+Create a file named 'Dockerfile'in the client directory. The Dockerfile defines the instructions to build the container image. 
+# backend dockerfile-syntax
 `FROM node:16-alpine
 WORKDIR /app
 COPY package.json .
