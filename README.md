@@ -101,3 +101,50 @@ networks:
         driver: bridge
     frontend:
         driver: bridge`
+
+
+
+
+
+        `version: '3'
+ services:
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+             - ~/app/mongo:/data/db 
+        networks:
+            - yolo1
+
+    client:
+        build:
+            dockerfile: Dockerfile
+            context: ./client
+        container_name: client
+        restart: always
+        ports:
+            - 3000:80
+        networks:
+            - frontend
+
+    backend:  
+        build:
+            dockerfile: Dockerfile
+            context: ./backend
+        container_name: backend
+        restart: always
+        depends_on:
+            - mongo
+        ports:
+            - 5000:5000
+        networks:
+            - yolo1
+            - frontend
+
+networks:
+    yolo1:
+        driver: bridge
+    frontend:
+        driver: bridge``
