@@ -59,7 +59,7 @@ Create a file named 'Dockerfile'in the client directory. The Dockerfile defines 
 Access the website by opening a web browser and navigating to http://localhost:5000
 
 ## Create docker compose YAML file to manage the microservices
-`version: '3'`
+`version: '3'
 `services:`
     `mongo:`
         `image: mongo`
