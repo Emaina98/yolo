@@ -14,9 +14,8 @@ Docker is a containerization platform that enables you to build, distribute, and
 ## Create Client Dockerfile
 Create a file named 'Dockerfile' in the client directory. The Dockerfile defines the instructions to build the container image. 
 
-## Frontend Dockerfile 
-
-`# stage 1
+## client Dockerfile-syntax
+` # stage 1
 FROM node:16-alpine as builder
 WORKDIR /app
 COPY package.json .
@@ -26,11 +25,10 @@ RUN npm install
 CMD [ "npm","build" ]
 RUN npm run build
 
-# stage 2
+#stage 2
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/build .
-`
+COPY --from=builder /app/build .`
 ``
 ## Build the Container Image
 `docker build -t emaina98/clientyolo:v1 .`
@@ -60,3 +58,48 @@ CMD [ "npm","run","start" ]`
 `docker run -p 5000:5000 emaina98/backend:v1.0.3`
 
 Access the website by opening a web browser and navigating to http://localhost:5000
+
+## Create docker compose YAML file to manage the microservices
+'version: '3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/app/mongo:/data/db 
+    networks:
+      - yolo1
+
+  client: 
+    build: 
+      dockerfile: Dockerfile
+      context: ./client
+    container_name: client
+    restart: always
+    ports:
+      - 3000:80
+    networks:
+      - frontend
+    
+
+  backend:
+    build:
+     dockerfile: Dockerfile
+     context: ./backend
+    container_name: backend
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 5000:5000
+    networks:
+      - yolo1
+      - frontend
+
+networks:
+  yolo1:
+     driver: bridge
+  frontend:
+     driver: bridge'
