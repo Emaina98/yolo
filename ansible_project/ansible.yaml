@@ -16,5 +16,8 @@
     - name: Install Docker 
       raw: curl -fsSl https://get.docker.com/ | sh
 
+- name: Assign Docker  To privileges
+      raw: sudo usermod -aG docker $(whoami)
+      
     - name: Start Docker 
       raw: sudo systemctl start docker
