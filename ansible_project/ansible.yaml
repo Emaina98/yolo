@@ -30,3 +30,6 @@
         path: /yolo
         state: directory
         mode: 0755
+
+    - name: Clone to the Directory 
+      raw: wget https://github.com/Emaina98/yolo.git
