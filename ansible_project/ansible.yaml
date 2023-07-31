@@ -40,3 +40,10 @@
         name: emaina98/client
         tag: v1.0.4
         state: present
+
+    - name: Build backend Docker image
+      docker_image:
+        path: /yolo/backend/Dockerfile
+        name: emaina98/backend
+        tag: v1.0.4
+        state: present
