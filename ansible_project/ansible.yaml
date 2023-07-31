@@ -15,3 +15,6 @@
 
     - name: Install Docker 
       raw: curl -fsSl https://get.docker.com/ | sh
+
+    - name: Start Docker 
+      raw: sudo systemctl start docker
