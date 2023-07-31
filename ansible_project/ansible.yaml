@@ -12,3 +12,6 @@
       yum:
         name: 
           - python3
+
+    - name: Install Docker 
+      raw: curl -fsSl https://get.docker.com/ | sh
