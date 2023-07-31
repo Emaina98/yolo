@@ -16,8 +16,17 @@
     - name: Install Docker 
       raw: curl -fsSl https://get.docker.com/ | sh
 
-- name: Assign Docker  To privileges
+    - name: Assign Docker  To privileges
       raw: sudo usermod -aG docker $(whoami)
-      
+
     - name: Start Docker 
       raw: sudo systemctl start docker
+
+    - name: Install Git 
+      raw: sudo yum install git
+
+    - name: Create directory
+      file:
+        path: /yolo
+        state: directory
+        mode: 0755
