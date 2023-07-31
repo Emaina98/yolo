@@ -33,3 +33,10 @@
 
     - name: Clone to the Directory 
       raw: wget https://github.com/Emaina98/yolo.git
+
+    - name: Build Client Docker image
+      docker_image:
+        path: /yolo/client/Dockerfile
+        name: emaina98/client
+        tag: v1.0.4
+        state: present
