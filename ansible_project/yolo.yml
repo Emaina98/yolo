@@ -13,10 +13,18 @@ tasks:
         name:
           - python3
 
- - name: Install Docker
+    - name: Install Docker
       raw: curl -fsSL https://get.docker.com/ | sh
 
     - name: Assign Docker to privileges
       raw: sudo usermod -aG docker $(whoami)
+
+     - name: Start Docker
+      raw: sudo systemctl start docker
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
 
 
