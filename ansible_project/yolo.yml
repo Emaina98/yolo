@@ -63,7 +63,7 @@ tasks:
   - name: Start Docker Compose services
     command: docker-compose up
     args:
-      chdir: /yolo
+        chdir: /yolo
 
 
 
