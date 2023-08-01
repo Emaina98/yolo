@@ -33,4 +33,10 @@ tasks:
         state: directory
         mode: 0755
 
+    - name: Clone the Git repository
+      become: yes
+      git:
+        repo: https://github.com/Emaina98/yolo.git
+        dest: /yolo
+
 
