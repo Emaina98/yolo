@@ -32,11 +32,15 @@ bashCopy code
 cd yolo
 
 2.Run the Ansible playbook:
+Navigate to yolo then to ansible_project
+
+<cd yolo>
+<cd ansible_project>
     
 
 bashCopy code
 
-`ansible-playbook -i inventory.yml yolo.yml` 
+`ansible-playbook yolo.yml` 
 
 The playbook will execute all the tasks, setting up the YOLO Ecommerce environment on the target machine.
 

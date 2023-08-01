@@ -1,63 +1,43 @@
-## Explanation for the provided Ansible playbook
+# Explanation for "App containerisation with Ansible" Playbook
+This Ansible playbook aims to containerize an application using Docker and Docker Compose. It runs a series of tasks on the localhost host to set up the necessary environment for running the application in containers. The playbook assumes that Docker and Docker Compose are already installed on the target host.
 
-This Ansible playbook is intended to set up a YOLO e-commerce application on a virtual machine (VM) with the hostname "my_vm." The playbook consists of various tasks, each of which performs specific actions to configure the environment and deploy the application.
+## Playbook Structure
+The playbook consists of one play named "App containerisation with Ansible." It runs on the localhost host and utilizes the become directive to execute tasks with elevated privileges using sudo.
 
-# Task 1: Check SSH connectivity and ping
-Name: Check SSH connectivity and ping
-Module used: ping
-Purpose: This task checks whether the Ansible control machine can connect to the target VM ("my_vm") via SSH and verifies basic network connectivity by sending an ICMP echo request (ping) to the VM.
+#Tasks:
 
-# Task 2: Install Python 3
-Name: Install Python 3 version
-Module used: yum
-Purpose: This task uses the package manager "yum" to install Python 3 on the target VM.
+## Check SSH connectivity and ping:
+ This task is a basic connectivity check to ensure that the localhost is accessible and responsive.
 
-# Task 3: Install Docker
-Name: Install Docker
-Module used: raw
-Purpose: This task uses a raw shell command to install Docker on the target VM. It downloads a script from https://get.docker.com and executes it using sh, which installs Docker.
+## Install python3 version: 
+The apt module is used to install Python 3 on the localhost.
 
-# Task 4: Assign Docker privileges
-Name: Assign Docker To privileges
-Module used: raw
-Purpose: This task grants the current user (who runs the Ansible playbook) the necessary privileges to execute Docker commands by adding the user to the "docker" group.
+## Install Docker: 
+The raw module executes a shell command to install Docker on the target host using the get.docker.com script.
 
-# Task 5: Start Docker
-Name: Start Docker
-Module used: raw
-Purpose: This task starts the Docker daemon on the target VM using the systemctl command.
+## Assign Docker to privileges: 
+The raw module adds the current user to the docker group to allow running Docker commands without sudo.
 
-# Task 6: Install Git
-Name: Install Git
-Module used: raw
-Purpose: This task installs Git on the target VM using the package manager "yum."
+## Start Docker: 
+The raw module starts the Docker daemon using systemctl.
 
-# Task 7: Create directory
-Name: Create directory
-Module used: file
-Purpose: This task creates a directory named "/yolo" on the target VM with the specified mode "0755," allowing read, write, and execute permissions for the owner and read and execute permissions for others.
+## Install Git: 
+The apt module installs Git on the localhost.
 
-# Task 8: Clone to the Directory
-Name: Clone to the Directory
-Module used: raw
-Purpose: This task uses wget to download the YOLO e-commerce application repository from the specified URL (https://github.com/Emaina98/yolo.git) and saves it in the "/yolo" directory.
+## Create directory: 
+The file module creates a directory at /yolo on the localhost with the appropriate permissions (mode 0755).
 
-# Task 9: Build Client Docker image
-Name: Build Client Docker image
-Module used: docker_image
-Purpose: This task builds a Docker image named "emaina98/client" using the Dockerfile located at "/yolo/client/Dockerfile" and assigns it the tag "v1.0.4."
+## Clone the Git repository: 
+The git module clones the Git repository from https://github.com/Emaina98/yolo.git and places it in the /yolo directory.
 
-# Task 10: Build backend Docker image
-Name: Build backend Docker image
-Module used: docker_image
-Purpose: This task builds a Docker image named "emaina98/backend" using the Dockerfile located at "/yolo/backend/Dockerfile" and assigns it the tag "v1.0.4."
+## Build Docker Image for Client: 
+The docker_image module builds a Docker image for the client application using the Dockerfile located in /yolo/client directory. The built image is tagged as Emaina98/client:v1.
 
-# Task 11: Install Docker Compose
-Name: Install Docker Compose
-Module used: raw
-Purpose: This task installs Docker Compose on the target VM by downloading the appropriate binary for the operating system and architecture from the official GitHub release and making it executable.
+## Build Docker Image for Backend: 
+The docker_image module builds a Docker image for the backend application using the Dockerfile located in /yolo/backend directory. The built image is tagged as Emaina98/backend:v1.
 
-# Task 12: Start Docker Compose services
-Name: Start Docker Compose services
-Module used: raw
-Purpose: This task changes the current working directory to "/yolo" and then uses docker-compose up to start the YOLO e-commerce application's services defined in the "docker-compose.yml" file in that directory.
+## Install Docker Compose: 
+The raw module downloads and installs Docker Compose binary into /usr/local/bin from the specified URL.
+
+## Start Docker Compose services: 
+The command module runs the docker-compose up command to start the services defined in the docker-compose.yml file located in the /yolo directory.
