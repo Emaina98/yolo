@@ -2,9 +2,9 @@
 - name: App containerisation with ansible
   hosts: localhost
   gather_facts: no
-  become_user: root
+  become: yes
 
-tasks:
+  tasks:
     - name: Check SSH connectivity and ping
       ping:
 
@@ -19,7 +19,7 @@ tasks:
     - name: Assign Docker to privileges
       raw: sudo usermod -aG docker $(whoami)
 
-     - name: Start Docker
+    - name: Start Docker
       raw: sudo systemctl start docker
 
     - name: Install Git
@@ -31,41 +31,35 @@ tasks:
       file:
         path: /yolo
         state: directory
-        mode: 0755
+        mode: "0755"
 
     - name: Clone the Git repository
-      become: yes
       git:
         repo: https://github.com/Emaina98/yolo.git
         dest: /yolo
 
-   - name: Build Docker Image for Client
-     docker_image:
-    build:
-      path: /yolo/client 
-    name: Emaina98/client:v1
-    source: build  
-    state: present
+    - name: Build Docker Image for Client
+      docker_image:
+        build:
+          path: /yolo/client
+        name: Emaina98/client:v1
+        source: build
+        state: present
 
-  - name: Build Docker Image for Backend
-    docker_image:
-    build:
-      path: /yolo/backend 
-    name: Emaina98/backend:v1
-    source: build
-    state: present
+    - name: Build Docker Image for Backend
+      docker_image:
+        build:
+          path: /yolo/backend
+        name: Emaina98/backend:v1
+        source: build
+        state: present
 
-  - name: Install Docker Compose
-    raw: |
+    - name: Install Docker Compose
+      raw: |
         sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
 
-  - name: Start Docker Compose services
-    command: docker-compose up
-    args:
+    - name: Start Docker Compose services
+      command: docker-compose up
+      args:
         chdir: /yolo
-
-
-
-
-
