@@ -1,4 +1,4 @@
-# YOLO Ecommerce Setup
+# YOLO Ecommerce containerization
 
 This repository contains an Ansible playbook to set up a YOLO Ecommerce environment on the target `my_vm` virtual machine. The playbook performs the following tasks:
 
@@ -10,7 +10,7 @@ This repository contains an Ansible playbook to set up a YOLO Ecommerce environm
 6.  Installs Git.
 7.  Creates a directory `/yolo`.
 8.  Clones the YOLO repository from `https://github.com/Emaina98/yolo.git` to the `/yolo` directory.
-9.  Builds Docker images for the client and backend with the tag `v1.0.4`.
+9.  Builds Docker images for the client and backend with the tag `v1
 10.  Installs Docker Compose.
 11.  Starts the Docker Compose services for YOLO Ecommerce.
 
@@ -18,7 +18,7 @@ This repository contains an Ansible playbook to set up a YOLO Ecommerce environm
 
 Before running the playbook, ensure the following:
 
-1.  The target machine (`my_vm`) has SSH connectivity and the Ansible control machine can access it.
+1.  The target machine (`localhost') has SSH connectivity and the Ansible control machine can access it.
 2.  The target machine should have internet access to install packages and fetch Docker images.
 3.  The user executing the playbook has sudo privileges.
 
@@ -36,7 +36,7 @@ cd yolo
 
 bashCopy code
 
-`ansible-playbook -i hosts playbook.yml` 
+`ansible-playbook -i inventory.yml yolo.yml` 
 
 The playbook will execute all the tasks, setting up the YOLO Ecommerce environment on the target machine.
 
