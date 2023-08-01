@@ -39,4 +39,33 @@ tasks:
         repo: https://github.com/Emaina98/yolo.git
         dest: /yolo
 
+   - name: Build Docker Image for Client
+     docker_image:
+    build:
+      path: /yolo/client 
+    name: Emaina98/client:v1
+    source: build  
+    state: present
+
+  - name: Build Docker Image for Backend
+    docker_image:
+    build:
+      path: /yolo/backend 
+    name: Emaina98/backend:v1
+    source: build
+    state: present
+
+  - name: Install Docker Compose
+    raw: |
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+
+  - name: Start Docker Compose services
+    command: docker-compose up
+    args:
+      chdir: /yolo
+
+
+
+
 
