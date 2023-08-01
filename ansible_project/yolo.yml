@@ -27,4 +27,10 @@ tasks:
         name: git
         state: present
 
+    - name: Create directory
+      file:
+        path: /yolo
+        state: directory
+        mode: 0755
+
 
