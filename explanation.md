@@ -26,11 +26,11 @@ Install Git:
 ## install git
 The apt module installs Git on the target hosts, making it ready for repository cloning.
 Clone the Git Repository:
-
+## Clone the Repository
 The raw module clones a Git repository containing the containerized application from https://github.com/Emaina98/yolo.git.
 The repository will be cloned into the /home/vagrant/yolo directory on the target hosts.
 Start Docker Compose services:
-
+## Docder compose
 The command module executes the docker compose up -d command to start the Docker Compose services.
 The become: yes ensures running the command with elevated privileges.
 The args specify the working directory for the docker compose command, which is /home/vagrant/yolo.
