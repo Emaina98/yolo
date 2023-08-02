@@ -1,103 +1,36 @@
+# Ecommerce website Containerization with Ansible
 
+This Ansible playbook automates the process of setting up Docker and running a containerized application on the target hosts. It installs the necessary prerequisites, Docker, and Git, and then clones a Git repository containing the containerized application. Finally, it starts the Docker Compose services to run the application.
 
+## Prerequisites
 
+Before running the playbook, ensure you have the following:
 
-## Yolo Containerization README
-This file contains the steps followed in the containerization of Yolo e-commerce website.
-## Requirements
-Make sure that you have the following installed::
-#### Docker 
-Docker is a containerization platform that enables you to build, distribute, and run containers.
-## Getting Started
-## Navigate to the Client Folder 
-`cd client`
-## Create Client Dockerfile
-Create a file named 'Dockerfile' in the client directory. The Dockerfile defines the instructions to build the container image. 
+- Ansible installed on your control machine.
+- SSH access to the target hosts with the necessary privileges.
+- Targets have access to the internet to install Docker and Git.
 
-## client Dockerfile-syntax
-`FROM node:16-alpine as builder
- WORKDIR /app
- COPY package.json .
- COPY package-lock.json .
- COPY . .
- RUN npm install
- CMD [ "npm","build" ]
- RUN npm run build`
+## Usage
 
-`#stage 2
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/build .`
+1. Clone the Ansible playbook repository to your local machine:
 
-## Build the Container Image
-`docker build -t emaina98/clientyolo:v1 .
-## Run the Container
-`docker run -p 3000:80 emaina98/clientyolo:v1`
+   <git clone https://github.com/Emaina98/yolo.git>
+   <cd yolo>
+   Update the hosts file with the target hosts' information where you want to set up the application.
 
-Access the website by opening a web browser and navigating to http://localhost:3000
+## Run the Ansible playbook:
 
-## Best Practices
-Minimal base image used to reduce the container's size.
+<ansible-playbook -i hosts playbook.yml>
 
-## Open a new terminal and repeat the same steps in the backend folder
- `cd backend`
-## Create backend Dockerfile
-Create a file named 'Dockerfile'in the client directory. The Dockerfile defines the instructions to build the container image. 
-# backend dockerfile-syntax
-`FROM node:16-alpine
-WORKDIR /app
-COPY package.json .
-COPY . .
-RUN npm install
-EXPOSE 5000
-CMD [ "npm","run","start" ]`
-## Build the Container Image
-`docker build -t emaina98/backend:v1.0.3  .`
-## Run the Container
-`docker run -p 5000:5000 emaina98/backend:v1.0.3`
+The playbook will install Docker, Git, clone the Git repository with the containerized application, and start the Docker Compose services.
 
-Access the website by opening a web browser and navigating to http://localhost:5000
+## Playbook Structure
+The playbook is structured as follows:
 
-## Create docker compose YAML file to manage the microservices
-`version: '3'
-  services:
-    mongo:
-        image: mongo
-        restart: always
-        ports:
-            - 27017:27017
-        volumes:
-             - ~/app/mongo:/data/db 
-        networks:
-            - yolo1`
-
-    client:
-        build:
-            dockerfile: Dockerfile
-            context: ./client
-        container_name: client
-        restart: always
-        ports:
-            - 3000:80
-        networks:
-            - frontend
-
-    backend:  
-        build:
-            dockerfile: Dockerfile
-            context: ./backend
-        container_name: backend
-        restart: always
-        depends_on:
-            - mongo
-        ports:
-            - 5000:5000
-        networks:
-            - yolo1
-            - frontend
-
-    networks:
-        yolo1:
-            driver: bridge
-         frontend:
-            driver: bridge`
+Install Prerequisites: Installs required packages to set up Docker and Git.
+Install Docker: Fetches and installs Docker using the official script.
+Assign Docker to Privileges: Adds the current user to the 'docker' group to avoid using 'sudo' for Docker commands.
+Start Docker: Starts the Docker service on the target host.
+Install Git: Installs Git to clone the application repository.
+Clone the Git Repository: Clones the Git repository containing the containerized application.
+Start Docker Compose Services: Starts the Docker Compose services to run the application.
