@@ -1,0 +1,41 @@
+---
+- name: App containerisation with ansible
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+   - name: Install Prerequisites
+     apt:
+      pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+      state: latest
+      update_cache: true
+     tags: os-prerequisite
+
+   - name: Install Docker
+     raw: curl -fsSL https://get.docker.com/ | sh
+
+   - name: Assign Docker to privileges
+     raw: sudo usermod -aG docker $(whoami)
+
+   - name: Start Docker
+     raw: sudo systemctl start docker
+
+   - name: Install Git
+     apt:
+      name: git
+      state: present
+
+   - name: Clone the Git repository
+     raw: git clone https://github.com/Emaina98/yolo.git
+    
+   - name: Start Docker Compose services
+     command: docker compose up -d
+     become: yes
+     args:
+        chdir: /home/vagrant/yolo
+     tags: docker-compose 
