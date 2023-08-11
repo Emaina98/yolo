@@ -1,0 +1,61 @@
+---
+ name: Set up a yolo ecommerce
+  hosts: localhost
+  gather_facts: no
+  become_user: root
+
+
+  tasks:
+    - name: Check SSH connectivity and ping
+      ping:
+
+    - name: Install python3 version
+      yum:
+        name: 
+          - python3
+
+    - name: Install Docker 
+      raw: curl -fsSl https://get.docker.com/ | sh
+
+    - name: Assign Docker  To privileges
+      raw: sudo usermod -aG docker $(whoami)
+
+    - name: Start Docker 
+      raw: sudo systemctl start docker
+
+    - name: Install Git 
+      raw: sudo yum install git
+
+    - name: Create directory
+      file:
+        path: /yolo
+        state: directory
+        mode: 0755
+
+    - name: Clone to the Directory 
+      raw: wget https://github.com/Emaina98/yolo.git
+
+    - name: Build Client Docker image
+      docker_image:
+        path: /yolo/client/Dockerfile
+        name: emaina98/client
+        tag: v1.0.4
+        state: present
+
+    - name: Build backend Docker image
+      docker_image:
+        path: /yolo/backend/Dockerfile
+        name: emaina98/backend
+        tag: v1.0.4
+        state: present
+
+    - name: Install docker Compose
+      raw: |
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+      
+   - name: Start Docker Compose services
+     command: docker-compose up
+     args:
+       chdir: /yolo
